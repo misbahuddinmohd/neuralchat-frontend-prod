@@ -388,175 +388,68 @@
 
 
 
-// src/contexts/ChatContext.js
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import axios from 'axios';
-import { getMessages, sendMessage } from '../api/messages';
-
-const ChatContext = createContext();
-
-// Custom hook to use ChatContext
-export const useChatContext = () => {
-  return useContext(ChatContext);
-};
-
-// ChatProvider Component
-export const ChatProvider = ({ children }) => {
-  const [messages, setMessages] = useState([]);
-  const [recentChats, setRecentChats] = useState([]);
-  const [isCanvasOpen, setIsCanvasOpen] = useState(false);
-
-  // Fetch messages between two users
-  const handleReceiveMessages = async (secUserID) => {
-    try {
-      const receivedMessages = await getMessages(secUserID);
-      setMessages(receivedMessages.data);
-    } catch (error) {
-      console.error('Failed to receive messeges:', error);
-    }
-  };
-
-  // Send a text message
-  const handleSendText = async (text, secUserID) => {
-    if (!text.trim()) return;
-
-    const newMessage = {
-      receiverID: secUserID,
-      message: text,
-      messageType: 'text'
-    };
-
-    try {
-      const response = await sendMessage(newMessage);
-      setMessages((prevMessages) => [...prevMessages, response.data]);
-    } catch (error) {
-      console.error('Failed to send text message:', error);
-    }
-  };
-
-  // Send a drawing
-  const handleSendDrawing = async (drawing, secUserID) => {
-    if (!drawing) return;
-
-    const newMessage = {
-      receiverID: secUserID,
-      message: drawing, // Drawing data (e.g., base64 or URL)
-      messageType: 'drawing'
-    };
-
-    try {
-      const response = await sendMessage(newMessage);
-      setMessages((prevMessages) => [...prevMessages, response.data]);
-    } catch (error) {
-      console.error('Failed to send drawing:', error);
-    }
-  };
-
-  return (
-    <ChatContext.Provider
-      value={{
-        messages,
-        setMessages,
-        isCanvasOpen,
-        setIsCanvasOpen,
-        handleSendText,
-        handleSendDrawing,
-        handleReceiveMessages,
-      }}
-    >
-      {children}
-    </ChatContext.Provider>
-  );
-};
-
-
-
-
 // // src/contexts/ChatContext.js
 // import React, { createContext, useState, useContext, useEffect } from 'react';
-// import { io } from 'socket.io-client';
-// import { getMessages } from '../api/messages';
+// import axios from 'axios';
+// import { getMessages, sendMessage } from '../api/messages';
 
-// const SOCKET_URL = process.env.BASEURL || 'http://localhost:7000';
 // const ChatContext = createContext();
 
-// export const useChatContext = () => useContext(ChatContext);
+// // Custom hook to use ChatContext
+// export const useChatContext = () => {
+//   return useContext(ChatContext);
+// };
 
+// // ChatProvider Component
 // export const ChatProvider = ({ children }) => {
 //   const [messages, setMessages] = useState([]);
-//   const [socket, setSocket] = useState(null);
+//   const [recentChats, setRecentChats] = useState([]);
 //   const [isCanvasOpen, setIsCanvasOpen] = useState(false);
 
-//   // Initialize socket connection
-//   useEffect(() => {
-//     const newSocket = io(SOCKET_URL);
-//     setSocket(newSocket);
-
-//     // Authenticate socket with user ID
-//     const userID = localStorage.getItem('userID');
-//     if (userID) {
-//       newSocket.emit('authenticate', userID);
-//     }
-
-//     // Socket event listeners
-//     newSocket.on('receive_message', (message) => {
-//       setMessages(prev => [...prev, message]);
-//     });
-
-//     newSocket.on('message_sent', (message) => {
-//       setMessages(prev => [...prev, message]);
-//     });
-
-//     newSocket.on('receive_drawing', (drawing) => {
-//       setMessages(prev => [...prev, drawing]);
-//     });
-
-//     newSocket.on('drawing_sent', (drawing) => {
-//       setMessages(prev => [...prev, drawing]);
-//     });
-
-//     return () => newSocket.close();
-//   }, []);
-
-//   // Fetch message history
+//   // Fetch messages between two users
 //   const handleReceiveMessages = async (secUserID) => {
 //     try {
 //       const receivedMessages = await getMessages(secUserID);
-//       console.log(receivedMessages.data);
 //       setMessages(receivedMessages.data);
 //     } catch (error) {
-//       console.error('Failed to receive messages:', error);
+//       console.error('Failed to receive messeges:', error);
 //     }
 //   };
 
-//   // Send text message
-//   const handleSendText = async (text, receiverID) => {
-//     if (!text.trim() || !socket) return;
+//   // Send a text message
+//   const handleSendText = async (text, secUserID) => {
+//     if (!text.trim()) return;
 
-//     const messageData = {
-//       senderID: localStorage.getItem('userID'),
-//       receiverID,
+//     const newMessage = {
+//       receiverID: secUserID,
 //       message: text,
 //       messageType: 'text'
 //     };
 
-//     // Emit the message through socket
-//     socket.emit('send_message', messageData);
+//     try {
+//       const response = await sendMessage(newMessage);
+//       setMessages((prevMessages) => [...prevMessages, response.data]);
+//     } catch (error) {
+//       console.error('Failed to send text message:', error);
+//     }
 //   };
 
-//   // Send drawing
-//   const handleSendDrawing = async (drawing, receiverID) => {
-//     if (!drawing || !socket) return;
+//   // Send a drawing
+//   const handleSendDrawing = async (drawing, secUserID) => {
+//     if (!drawing) return;
 
-//     const drawingData = {
-//       senderID: localStorage.getItem('userID'),
-//       receiverID,
-//       message: drawing,
+//     const newMessage = {
+//       receiverID: secUserID,
+//       message: drawing, // Drawing data (e.g., base64 or URL)
 //       messageType: 'drawing'
 //     };
 
-//     // Emit the drawing through socket
-//     socket.emit('send_drawing', drawingData);
+//     try {
+//       const response = await sendMessage(newMessage);
+//       setMessages((prevMessages) => [...prevMessages, response.data]);
+//     } catch (error) {
+//       console.error('Failed to send drawing:', error);
+//     }
 //   };
 
 //   return (
@@ -575,3 +468,110 @@ export const ChatProvider = ({ children }) => {
 //     </ChatContext.Provider>
 //   );
 // };
+
+
+
+
+// src/contexts/ChatContext.js
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import { io } from 'socket.io-client';
+import { getMessages } from '../api/messages';
+
+const SOCKET_URL = process.env.BASEURL || 'http://localhost:7000';
+const ChatContext = createContext();
+
+export const useChatContext = () => useContext(ChatContext);
+
+export const ChatProvider = ({ children }) => {
+  const [messages, setMessages] = useState([]);
+  const [socket, setSocket] = useState(null);
+  const [isCanvasOpen, setIsCanvasOpen] = useState(false);
+
+  // Initialize socket connection
+  useEffect(() => {
+    const newSocket = io(SOCKET_URL);
+    setSocket(newSocket);
+
+    // Authenticate socket with user ID
+    const userID = localStorage.getItem('userID');
+    if (userID) {
+      newSocket.emit('authenticate', userID);
+    }
+
+    // Socket event listeners
+    newSocket.on('receive_message', (message) => {
+      setMessages(prev => [...prev, message]);
+    });
+
+    newSocket.on('message_sent', (message) => {
+      setMessages(prev => [...prev, message]);
+    });
+
+    newSocket.on('receive_drawing', (drawing) => {
+      setMessages(prev => [...prev, drawing]);
+    });
+
+    newSocket.on('drawing_sent', (drawing) => {
+      setMessages(prev => [...prev, drawing]);
+    });
+
+    return () => newSocket.close();
+  }, []);
+
+  // Fetch message history
+  const handleReceiveMessages = async (secUserID) => {
+    try {
+      const receivedMessages = await getMessages(secUserID);
+      console.log(receivedMessages.data);
+      setMessages(receivedMessages.data);
+    } catch (error) {
+      console.error('Failed to receive messages:', error);
+    }
+  };
+
+  // Send text message
+  const handleSendText = async (text, receiverID) => {
+    if (!text.trim() || !socket) return;
+
+    const messageData = {
+      senderID: localStorage.getItem('userID'),
+      receiverID,
+      message: text,
+      messageType: 'text'
+    };
+
+    // Emit the message through socket
+    socket.emit('send_message', messageData);
+  };
+
+  // Send drawing
+  const handleSendDrawing = async (drawing, receiverID) => {
+    if (!drawing || !socket) return;
+
+    const drawingData = {
+      senderID: localStorage.getItem('userID'),
+      receiverID,
+      message: drawing,
+      messageType: 'drawing'
+    };
+
+    // Emit the drawing through socket
+    socket.emit('send_drawing', drawingData);
+  };
+
+  return (
+    <ChatContext.Provider
+      value={{
+        messages,
+        setMessages,
+        isCanvasOpen,
+        setIsCanvasOpen,
+        handleSendText,
+        handleSendDrawing,
+        handleReceiveMessages,
+      }}
+    >
+      {children}
+    </ChatContext.Provider>
+  );
+};
