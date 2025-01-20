@@ -14,7 +14,7 @@ const ChatHeader = () => {
       {user ? (
         <>
           <img
-            src={user.profilePic || 'https://via.placeholder.com/40'}
+            src={user.profilePic || '/user.png'}
             alt={user.username}
             className="w-10 h-10 rounded-full"
           />

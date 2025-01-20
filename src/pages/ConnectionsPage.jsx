@@ -173,7 +173,7 @@ const ConnectionsPage = () => {
               className="flex items-center p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors cursor-pointer"
             >
               <img
-                src={user.profilePic || 'https://via.placeholder.com/40'}
+                src={user.profilePic || '/user.png'}
                 alt={user.userName}
                 className="w-10 h-10 rounded-full mr-4"
               />
