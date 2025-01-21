@@ -32,6 +32,7 @@
 // src/components/Chat/MessageItem.jsx
 import React from 'react';
 import { formatMessageTime } from '../../utils/dateUtils';
+import { useEffect } from 'react';
 
 const MessageItem = ({ message, onImageLoadStart, onImageLoadEnd }) => {
   const localSenderID = localStorage.getItem("userID");
@@ -40,7 +41,7 @@ const MessageItem = ({ message, onImageLoadStart, onImageLoadEnd }) => {
     onImageLoadEnd();
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (message.messageType === "image") {
       onImageLoadStart();
     }
