@@ -477,7 +477,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { getMessages } from '../api/messages';
 
-const SOCKET_URL = process.env.BASEURL || 'http://localhost:7000';
+const SOCKET_URL = process.env.REACT_APP_BASEURL || 'http://localhost:7000';
 const ChatContext = createContext();
 
 export const useChatContext = () => useContext(ChatContext);
