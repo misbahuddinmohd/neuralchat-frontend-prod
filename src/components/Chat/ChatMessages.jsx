@@ -54,7 +54,7 @@ import { useChatContext } from '../../contexts/ChatContext';
 import { formatMessageDate } from '../../utils/dateUtils';
 
 const ChatMessages = () => {
-  const { messages, handleReceiveMessages, updateReadMessagesCount } = useChatContext();
+  const { messages, setMessages, handleReceiveMessages, updateReadMessagesCount } = useChatContext();
   const { userID } = useParams();
   const messagesEndRef = useRef(null);
   const [loadingImages, setLoadingImages] = useState(new Set());
@@ -76,6 +76,7 @@ const ChatMessages = () => {
     }, [messages]);
 
   useEffect(() => {
+    setMessages([]);
     const fetchMessages = async () => {
       const userMessages = await handleReceiveMessages(userID);
     };
