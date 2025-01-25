@@ -104,8 +104,8 @@ const ChatMessages = () => {
       <div className="space-y-4 relative">
         {groupedMessages && Object.entries(groupedMessages).map(([date, dateMessages]) => (
           <div key={date} className="relative pt-6 first:pt-2">
-            <div className="sticky top-0 z-0 flex justify-center">
-              <div className="bg-gray-800/90 backdrop-blur-sm text-gray-300 px-4 py-1 rounded-full text-sm shadow-md mt-16 sm:mt-0">
+            <div className="sticky top-0 z-20 flex justify-center pointer-events-none">
+              <div className="bg-gray-800/90 backdrop-blur-sm text-gray-300 px-4 py-1 rounded-full text-sm shadow-md">
                 {date}
               </div>
             </div>
