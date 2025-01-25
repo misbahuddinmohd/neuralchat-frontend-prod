@@ -72,11 +72,11 @@ const ChatMessages = () => {
   };
 
   useEffect(() => {
-      updateReadMessagesCount(userID);
-    }, [messages]);
+    updateReadMessagesCount(userID);
+  }, [messages]);
 
   useEffect(() => {
-    setMessages([]);
+
     const fetchMessages = async () => {
       const userMessages = await handleReceiveMessages(userID);
     };
@@ -104,15 +104,15 @@ const ChatMessages = () => {
       <div className="space-y-4 relative">
         {groupedMessages && Object.entries(groupedMessages).map(([date, dateMessages]) => (
           <div key={date} className="relative pt-6 first:pt-2">
-            <div className="sticky top-2 z-10 flex justify-center">
-              <div className="bg-gray-800/90 backdrop-blur-sm text-gray-300 px-4 py-1 rounded-full text-sm shadow-md">
+            <div className="sticky top-0 z-0 flex justify-center">
+              <div className="bg-gray-800/90 backdrop-blur-sm text-gray-300 px-4 py-1 rounded-full text-sm shadow-md mt-16 sm:mt-0">
                 {date}
               </div>
             </div>
             <div className="space-y-3 mt-2">
               {dateMessages.map((message) => (
-                <MessageItem 
-                  key={message.id} 
+                <MessageItem
+                  key={message.id}
                   message={message}
                   onImageLoadStart={() => handleImageLoadStart(message.id)}
                   onImageLoadEnd={() => handleImageLoadEnd(message.id)}
