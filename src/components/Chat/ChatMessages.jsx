@@ -100,30 +100,35 @@ const ChatMessages = () => {
   }, {});
 
   return (
-    <div className="flex-1 overflow-y-auto p-2 md:p-4">
-      <div className="space-y-4 relative">
-        {groupedMessages && Object.entries(groupedMessages).map(([date, dateMessages]) => (
-          <div key={date} className="relative pt-6 first:pt-2">
-            <div className="sticky top-0 z-20 flex justify-center pointer-events-none">
-              <div className="bg-gray-800/90 backdrop-blur-sm text-gray-300 px-4 py-1 rounded-full text-sm shadow-md">
-                {date}
+    <div className="flex-1 overflow-y-auto p-2 md:p-4 relative">
+      <div className="space-y-4">
+        {groupedMessages &&
+          Object.entries(groupedMessages).map(([date, dateMessages]) => (
+            <div key={date} className="relative pt-6 first:pt-2">
+              {/* Sticky Date Element */}
+              <div className="sticky top-2 z-10 flex justify-center">
+                <div className="bg-gray-800/90 backdrop-blur-sm text-gray-300 px-4 py-1 rounded-full text-sm shadow-md">
+                  {date}
+                </div>
+              </div>
+
+              {/* Messages */}
+              <div className="space-y-3 mt-2 relative z-5">
+                {dateMessages.map((message) => (
+                  <MessageItem
+                    key={message.id}
+                    message={message}
+                    onImageLoadStart={() => handleImageLoadStart(message.id)}
+                    onImageLoadEnd={() => handleImageLoadEnd(message.id)}
+                  />
+                ))}
               </div>
             </div>
-            <div className="space-y-3 mt-2">
-              {dateMessages.map((message) => (
-                <MessageItem
-                  key={message.id}
-                  message={message}
-                  onImageLoadStart={() => handleImageLoadStart(message.id)}
-                  onImageLoadEnd={() => handleImageLoadEnd(message.id)}
-                />
-              ))}
-            </div>
-          </div>
-        ))}
+          ))}
         <div ref={messagesEndRef} />
       </div>
     </div>
+
   );
 };
 
