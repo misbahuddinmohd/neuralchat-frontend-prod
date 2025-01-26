@@ -180,4 +180,3 @@ const ConnectionsPage = () => {
 };
 
 export default ConnectionsPage;
-

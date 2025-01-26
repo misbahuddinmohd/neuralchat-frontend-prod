@@ -328,7 +328,7 @@
 // export default DrawingCanvas;
 
 
-
+// src/components/Canvas/DrawingCanvas.jsx
 import React, { useRef, useState, useEffect } from 'react';
 import { Eraser } from 'lucide-react';
 import { useChatContext } from '../../contexts/ChatContext';
