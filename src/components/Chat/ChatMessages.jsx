@@ -61,6 +61,7 @@ const ChatMessages = () => {
   const [loadingImages, setLoadingImages] = useState(new Set());
   const [isLoading, setIsLoading] = useState(false);
   const [hasMoreMessages, setHasMoreMessages] = useState(true);
+  const lastSentMessageRef = useRef(null);
 
   const handleImageLoadStart = (messageId) => {
     setLoadingImages(prev => new Set([...prev, messageId]));
@@ -160,20 +161,23 @@ const ChatMessages = () => {
     }
   }, []);
 
-  // Auto-scroll for new messages
+
+  // Modify the useEffect for auto-scrolling
   useEffect(() => {
     const container = messagesContainerRef.current;
 
-    if (container && loadingImages.size === 0) {
-      // Always scroll to bottom for new messages, with a small threshold
-      const shouldScroll = 
-        container.scrollHeight - container.scrollTop <= container.clientHeight + 50;
-      
-      if (shouldScroll) {
+    if (container) {
+      // Check if the last message was just sent
+      const lastMessage = messages[messages.length - 1];
+      if (lastMessage && lastMessage.id !== lastSentMessageRef.current) {
+        // Always scroll to bottom for new messages
         container.scrollTop = container.scrollHeight;
+        
+        // Update the ref to track the last sent message
+        lastSentMessageRef.current = lastMessage.id;
       }
     }
-  }, [messages, loadingImages]);
+  }, [messages]);
 
   // Group messages by date for display
   const groupedMessages = messages?.reduce((groups, message) => {
